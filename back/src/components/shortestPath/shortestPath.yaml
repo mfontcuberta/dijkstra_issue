@@ -1,0 +1,43 @@
+components:
+  schemas:
+    ShortestPath:
+      required:
+        - grid
+        - startPosition
+      type: object
+      properties:
+        grid:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+        startPosition:
+          type: object
+          properties:
+            positionY:
+              type: number
+            positionX:
+              type: number
+
+path:
+  /shortestPath/:
+    post:
+      tags:
+        - ShortestPath
+      summary: find shortest path
+      description: find shortest path
+      requestBody:
+        description: find shortest path
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShortestPath'
+      responses:
+        200:
+          description: find shortest path
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShortestPath'

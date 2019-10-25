@@ -1,0 +1,1 @@
+export const URL_SHORTEST_PATH: string = 'shortestPath';

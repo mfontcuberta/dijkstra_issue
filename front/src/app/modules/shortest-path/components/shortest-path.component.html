@@ -1,0 +1,14 @@
+<button (click)="getSolution()">
+    SOLUTION
+</button>
+
+<div
+    *ngFor="let row of grid; let i = index"
+    class="row">
+        <div 
+        *ngFor="let item of row; let y = index"
+        class="item"
+        [ngClass]="{ 'wall': item == 0 }">
+            {{ getVectorToPaint(item) }}
+        </div>
+</div>

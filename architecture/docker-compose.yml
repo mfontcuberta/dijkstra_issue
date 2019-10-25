@@ -1,0 +1,46 @@
+version: "3.5"
+services:
+    back:
+        build:
+            context: ../back
+            dockerfile: ${PWD}/images/back/Dockerfile
+            args:
+              DEPLOY_ENV: ${DEPLOY_ENV}
+        image: back
+        container_name: back
+        ports:
+            - "${BACK_PORT}:${BACK_PORT}"
+            - "${BACK_DEBUG_PORT}:${BACK_DEBUG_PORT}"
+        env_file:
+            - ../env/back.env
+            - ./deploy.env
+        environment:
+            - PORT=${BACK_PORT}
+            - DEBUG_PORT=${BACK_DEBUG_PORT}
+            - ENVIRONMENT=${BACK_URL}
+        command: sh ./scripts/start.sh
+        networks:
+            - aquiles
+    
+    front:
+        build:
+            context: ../front
+            dockerfile: ${PWD}/images/front/Dockerfile
+            args:
+              DEPLOY_ENV: ${DEPLOY_ENV}
+            target: build-stage
+        image: front
+        container_name: front
+        ports:
+            - "${FRONT_PORT}:80"
+        env_file:
+            - ../env/front.env
+            - ./deploy.env
+        command: sh ./scripts/start.sh
+        networks:
+            - aquiles
+    
+networks:
+  aquiles:
+    external: true
+    name: back-end-net
